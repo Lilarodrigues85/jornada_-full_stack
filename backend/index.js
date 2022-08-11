@@ -1,5 +1,9 @@
 const express = require("express")
-const app = express()
+const app = express();
+
+//Sinalizar para o express que estamos usando o JSON no body das requisições
+
+app.use(express.json());
 
 app.get("/", function (req, res) {
   res.send("Hello, World!")
@@ -39,9 +43,16 @@ app.get("/pontuacoes", function(req,res) {
 // Endpoint CREAT - [POST] / pontuacoes
 app.post("/pontuacoes", function(req,res) {
   const item = req.body;
-  console.log(item);
+ //console.log(item);
 
-  res.send("Criar uma pontuação");
+ //Adicionar o item na lista
+  lista.push({
+    id: lista.length + 1,
+    nome: item.nome,
+    pontos: item.pontos,
+  })
+
+  res.send("Item Criado com sucesso");
 });
 
 app.listen(3000);
