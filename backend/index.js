@@ -37,5 +37,11 @@ app.get("/pontuacoes", function(req,res) {
 });
 
 // Endpoint CREAT - [POST] / pontuacoes
+app.post("/pontuacoes", function(req,res) {
+  const item = req.body;
+  console.log(item);
+
+  res.send("Criar uma pontuação");
+});
 
 app.listen(3000);
