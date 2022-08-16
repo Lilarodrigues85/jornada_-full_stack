@@ -12,9 +12,15 @@ const dbName = "jornada_fullstack_agosto_2022";
 //esse tempo. Para isso, vamos usar o async/await.
 
 //Declaração da função main
-function main() {
+async function main() {
 
-const client = MongoClient.connect(url);
+console.log("Conectando com o banco de dados...");
+
+const client = await MongoClient.connect(url);
+const db = client.db(dbName);
+const collection = db.collection("pontuacoes");
+
+console.log("Banco de dados conectado com sucesso!");
 
 const app = express();
 
@@ -33,43 +39,50 @@ app.get("/oi", function (req, res) {
 // Nosso backend armazena as pontuações das jogadas
 // Criar a lista com as pontuações
 
-const lista = [
-  {
-    id: 1,
-    nome: "Dalila",
-    pontos: 90,
-  },
-{
-  id: 2,
-  nome: "Felipe",
-  pontos: 52,
-},
+// const lista = [
+//   {
+//     id: 1,
+//     nome: "Dalila",
+//     pontos: 90,
+//   },
+// {
+//   id: 2,
+//   nome: "Felipe",
+//   pontos: 52,
+// },
 
-{
-  id: 3,
-  nome: "Sofia",
-  pontos: 97,
-},
-];
+// {
+//   id: 3,
+//   nome: "Sofia",
+//   pontos: 97,
+// },
+// ];
 
 // Endpoint READ ALL - [GET] / pontuacoes
-app.get("/pontuacoes", function(req,res) {
-  res.send(lista);
+app.get("/pontuacoes", async function(req,res) {
+  const itens = await collection
+    .find()
+    .sort({ pontos: -1 })
+    .limit(10)
+    .toArray();
+  res.send(itens);
 });
 
 // Endpoint CREAT - [POST] / pontuacoes
-app.post("/pontuacoes", function(req,res) {
+app.post("/pontuacoes", async function(req,res) {
   const item = req.body;
  //console.log(item);
 
  //Adicionar o item na lista
-  lista.push({
-    id: lista.length + 1,
-    nome: item.nome,
-    pontos: item.pontos,
-  })
+  //lista.push({
+   // id: lista.length + 1,
+  //  nome: item.nome,
+  //  pontos: item.pontos,
+ // })
 
-  res.send("Item Criado com sucesso");
+  await collection.insertOne(item);
+
+  res.send(item);
 });
 
 app.listen(3000);
