@@ -1,4 +1,21 @@
-const express = require("express")
+const express = require("express");
+const { MongoClient } = require("mongodb");
+
+const url = "mongodb://localhost:27017";
+const dbName = "jornada_fullstack_agosto_2022";
+
+//Realizar a conexão com o MongoClient
+//MongoClient -> MongoDatabase -> MongoCollection
+//Conexões com o client podem levar um tempo para
+//conclui. Portanto, utilizamos o mecanismo de 
+//Promises do Javascript, que permitem aguardar
+//esse tempo. Para isso, vamos usar o async/await.
+
+//Declaração da função main
+function main() {
+
+const client = MongoClient.connect(url);
+
 const app = express();
 
 //Sinalizar para o express que estamos usando o JSON no body das requisições
@@ -30,7 +47,7 @@ const lista = [
 
 {
   id: 3,
-  nome: "Dalila",
+  nome: "Sofia",
   pontos: 97,
 },
 ];
@@ -56,3 +73,7 @@ app.post("/pontuacoes", function(req,res) {
 });
 
 app.listen(3000);
+}
+
+//Executamos a função main()
+main();
