@@ -5,9 +5,17 @@
 }
 
 .nuvens {
-    width: 100px;
+    width: 200px;
 
     position: absolute;
     top: 30px;
     left: 50%
+}
+
+.pipe {
+    width: 50px;
+
+    position: absolute;
+    top: 250px;
+    left: 50%;
 }
