@@ -3,12 +3,14 @@ import clouds from "../../assets/clouds.png";
 import pipe from "../../assets/pipe.png";
 import mario from "../../assets/mario.gif";
 import gameOver from "../../assets/game-over.png";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 function Jogo () {
     
     const [estaPulando, setEstaPulando] = useState(false);
     const [estaMorto, setEstaMorto] = useState(false)
+
+    const [pontos, setPontos] = useState (0);
 
     const marioRef = useRef();
     const canoRef = useRef();
@@ -42,6 +44,23 @@ function Jogo () {
   setEstaMorto(true);
   }, 100);
 
+  useEffect(function (){
+
+    const interval = setInterval(function () {
+        if (estaMorto){
+            return;
+        }
+    
+        setPontos(pontos + 1);
+    
+        console.log({ pontos})
+    
+        },500);
+
+        return () => clearInterval(interval);
+    }, 
+    [estaMorto, pontos]
+  );
 
     document.onkeydown = function () {
        setEstaPulando (true); 
@@ -58,14 +77,20 @@ function Jogo () {
     }
   
     const marioImage = estaMorto ? gameOver : mario;
+
+    const pararAnimacao = estaMorto ? "parar-animacao" : "";
   
 
     return <div className="jogo">
         <img className="nuvens" alt="nuvens" src={clouds}/>
 
-        <img ref={canoRef} className="pipe" alt="pipe" src={pipe}/>
+        <img ref={canoRef}
+        className={"pipe " + pararAnimacao}
+        alt="pipe" src={pipe}/>
 
-        <img ref={marioRef} className={marioClassName} src={marioImage} alt="mario"/>
+        <img ref={marioRef} 
+        className={marioClassName} 
+        src={marioImage} alt="mario"/>
 
         <div className="chao"></div>
 
