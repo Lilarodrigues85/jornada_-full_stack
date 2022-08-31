@@ -53,8 +53,7 @@ function Jogo () {
     
         setPontos(pontos + 1);
     
-        console.log({ pontos})
-    
+         
         },500);
 
         return () => clearInterval(interval);
@@ -82,6 +81,9 @@ function Jogo () {
   
 
     return <div className="jogo">
+
+        <div>Pontos: {pontos}</div>
+
         <img className="nuvens" alt="nuvens" src={clouds}/>
 
         <img ref={canoRef}
