@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import "./Jogo.css";
 import clouds from "../../assets/clouds.png";
 import pipe from "../../assets/pipe.png";
@@ -5,9 +6,10 @@ import mario from "../../assets/mario.gif";
 import gameOver from "../../assets/game-over.png";
 import { useEffect, useRef, useState } from "react";
 
-function Jogo () {
+function Jogo (props) {
     
     const [estaPulando, setEstaPulando] = useState(false);
+    
     const [estaMorto, setEstaMorto] = useState(false)
 
     const [pontos, setPontos] = useState (0);
@@ -34,15 +36,24 @@ function Jogo () {
 
 // Implementação temporária para exibir se o mário está no cano
   // ou não
-  setInterval(function () {
-   const estaNoCano = marioEstaNoCano();
+  useEffect(function (){
 
-   if (!estaNoCano){
-    return;
-   }
+    const interval = setInterval(function () {
+        const estaNoCano = marioEstaNoCano();
+     
+        if (!estaNoCano || estaMorto){
+         return;
+        }
+     
+       setEstaMorto(true);
+       props.onDie();
+       }, 100);
 
-  setEstaMorto(true);
-  }, 100);
+       return () => clearInterval(interval);
+   },
+   [estaMorto]
+  );
+
 
   useEffect(function (){
 
