@@ -1,5 +1,6 @@
 const express = require("express");
 const { MongoClient } = require("mongodb");
+const cors = require('cors');
 
 //const url = "mongodb://localhost:27017";
 const url = "mongodb+srv://admin:x582KBxi5HqNWD2i@cluster0.etmiprd.mongodb.net/";
@@ -29,6 +30,7 @@ console.log("Banco de dados conectado com sucesso!");
 
 const app = express();
 
+app.use(cors());
 //Sinalizar para o express que estamos usando o JSON no body das requisições
 
 app.use(express.json());
@@ -90,7 +92,7 @@ app.post("/pontuacoes", async function(req,res) {
   res.send(item);
 });
 
-app.listen(process.env.PORT || 3000);
+app.listen(process.env.PORT || 3333);
 }
 
 //Executamos a função main()

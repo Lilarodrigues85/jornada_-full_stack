@@ -10,12 +10,13 @@ function App() {
 
   function onDie (pontosAoMorrer) {
     setGameOver(true);
-    setPontos(pontosAoMorrer);
+  
   }
 
   function onPontos(novosPontos) {
     setPontos(novosPontos);
   }
+
 
   return (
     <div className="App">

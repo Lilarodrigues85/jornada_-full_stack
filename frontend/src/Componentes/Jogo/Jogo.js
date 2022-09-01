@@ -55,23 +55,20 @@ function Jogo (props) {
   );
 
 
-  useEffect(function (){
-
-    const interval = setInterval(function () {
-        if (estaMorto){
-            return;
+  useEffect(
+    function () {
+      // Salvar a pontuação
+      const interval = setInterval(function () {
+        if (estaMorto) {
+          return;
         }
 
-           
         setPontos(pontos + 1);
-        console.log (pontos + 1);
         props.onPontos(pontos + 1);
-    
-         
-        },500);
+      }, 500);
 
-        return () => clearInterval(interval);
-    }, 
+      return () => clearInterval(interval);
+    },
     [estaMorto, pontos, props]
   );
 
