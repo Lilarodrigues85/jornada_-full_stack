@@ -51,7 +51,7 @@ function Jogo (props) {
 
        return () => clearInterval(interval);
    },
-   [estaMorto]
+   [estaMorto, props]
   );
 
 
@@ -61,15 +61,18 @@ function Jogo (props) {
         if (estaMorto){
             return;
         }
-    
+
+           
         setPontos(pontos + 1);
+        console.log (pontos + 1);
+        props.onPontos(pontos + 1);
     
          
         },500);
 
         return () => clearInterval(interval);
     }, 
-    [estaMorto, pontos]
+    [estaMorto, pontos, props]
   );
 
     document.onkeydown = function () {
